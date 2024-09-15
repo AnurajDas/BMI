@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMI Calculator</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+  />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+
+    #bmiMeter {
+      position: relative;
+      width: 300px;
+      margin: 20px auto;
+    }
+
+    #bmiMeter img {
+      width: 100%;
+    }
+
+    #pointer {
+      position: absolute;
+      top: 43px; 
+      left: 48.5%;
+      width: 4px;
+      height: 90px;
+      background-color: red;
+      transform-origin: bottom center;
+      transform: rotate(0deg);
+      transition: transform 0.5s ease-in-out;
+      border-radius: 5px;
+    }
+
+    .ui.form {
+      margin-top: 20px;
+    }
+
+    .ui.button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>BMI Calculator</h1>
+
+  <div id="bmiMeter">
+    <img src="Screenshot 2024-09-15 201253 (1).png" alt="BMI Meter">
+    <div id="pointer"></div>
+  </div>
+
+  <div class="ui form">
+    <div class="field">
+      <label for="weight">Weight (kg):</label>
+      <input type="number" id="weight" placeholder="Enter your weight">
+    </div>
+
+    <div class="field">
+      <label for="height">Height (m):</label>
+      <input type="number" step="0.01" id="height" placeholder="Enter your height">
+    </div>
+
+    <button class="ui primary button" onclick="calculateBMI()">Calculate BMI</button>
+  </div>
+
+  <div class="ui message result" id="bmiResult"></div>
+
+  <script>
+    function calculateBMI() {
+      const weight = document.getElementById('weight').value;
+      const height = document.getElementById('height').value;
+
+      if (weight && height) {
+        const bmi = (weight / (height * height)).toFixed(1);
+        document.getElementById('bmiResult').innerText = 'Your BMI is ' + bmi;
+
+        
+        let angle;
+        if (bmi < 18.5) {
+          angle = -60; 
+        } else if (bmi >= 18.5 && bmi < 25) {
+          angle = -20; 
+        } else if (bmi >= 25 && bmi < 30) {
+          angle = 20; 
+        } else if (bmi >= 30 && bmi < 35) {
+          angle = 60; 
+        } else {
+          angle = 100; 
+        }
+
+        document.getElementById('pointer').style.transform = `rotate(${angle}deg)`;
+      } else {
+        document.getElementById('bmiResult').innerText = 'Please enter valid weight and height.';
+      }
+    }
+  </script>
+
+</body>
+</html>
